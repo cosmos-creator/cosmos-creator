@@ -1,0 +1,84 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/src/CosmosCreator/CosmosCreator.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "publish",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "publish",
+        "${workspaceFolder}/src/CosmosCreator/CosmosCreator.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "watch",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "${workspaceFolder}/src/CosmosCreator/CosmosCreator.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "transpile",
+      "group": "build",
+      "type": "shell",
+      "command": "sass",
+      "args": [
+        "--update",
+        "--no-source-map",
+        "Styles/styles.dark.scss",
+        "wwwroot/assets/styles.css"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/src/CosmosCreator/"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false
+      },
+      "problemMatcher": [
+        "$node-sass"
+      ]
+    },
+    {
+      "label": "test",
+      "group": "build",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+        "test",
+        "--logger:\"console;verbosity=normal\"",
+        "--nologo",
+        "CosmosCreator.Tests.sln"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": "$msCompile"
+    },
+  ]
+}

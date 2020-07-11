@@ -1,0 +1,36 @@
+name: Unit Tests
+
+on:
+  push:
+    branches:
+      - release
+      - develop
+  pull_request:
+    branches:
+      - release
+      - develop
+
+env:
+  TEST_SOLUTION_FILE: CosmosCreator.Tests.sln
+
+jobs:
+  test:
+    name: Execute Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+
+    - name: Install dependencies
+      run: dotnet restore ${{ env.TEST_SOLUTION_FILE }}
+
+    - name: Run tests
+      run: dotnet test --no-restore --logger:"console;verbosity=normal" --nologo ${{ env.TEST_SOLUTION_FILE }}

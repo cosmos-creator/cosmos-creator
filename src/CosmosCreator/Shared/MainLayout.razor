@@ -1,0 +1,35 @@
+﻿@*
+SPDX-License-Identifier: MIT
+Copyright ©2020 Cosmos Creator Group
+*@
+
+@inherits LayoutComponentBase
+
+<div class="container">
+    <nav class="navbar">
+        <div class="app-name">Cosmos Creator</div>
+        <div class="navbar-menu">
+            Navbar
+        </div>
+    </nav>
+    <div class="page-container">
+        <NavMenu />
+        <div class="main-panel">
+            @Body
+        </div>
+    </div>
+</div>
+
+@* <div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main">
+    <div class="top-row px-4">
+        <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+    </div>
+
+    <div class="content px-4">
+        @Body
+    </div>
+</div> *@

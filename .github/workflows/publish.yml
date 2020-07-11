@@ -1,0 +1,82 @@
+name: Publish Release
+
+on:
+  release:
+    types: [published]
+
+env:
+  TAG_NAME: ${{ github.event.release.tag_name }}
+  SOLUTION_FILE: CosmosCreator.sln
+  TEST_SOLUTION_FILE: CosmosCreator.Tests.sln
+  PUBLISH_DIR: build
+  RELEASE_DIR: build/wwwroot
+  REPOSITORY_NAME: cosmos-creator/cosmos-creator.github.io
+  COMMIT_MESSAGE: Publish Release ${{ github.event.release.tag_name }}
+  UPLOAD_URL: ${{ github.event.release.upload_url }}
+
+jobs:
+  build:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+
+    - name: Install dependencies
+      run: dotnet restore ${{ env.SOLUTION_FILE }}
+
+    - name: Publish with .NET Core
+      run: dotnet publish --runtime wasm --configuration Release --output ${{ env.PUBLISH_DIR }} ${{ env.SOLUTION_FILE }}
+
+    - name: Transpile SCSS files
+      uses: gha-utilities/sass-build@v0.2.3
+      with:
+        source: src/CosmosCreator/Styles/styles.dark.scss
+        destination: build/wwwroot/assets/styles.css
+
+    - name: Create readme file
+      run: |
+        printf '%s\n' '# Cosmos Creator ${{ env.TAG_NAME }}' '' 'This is a deployed release of Cosmos Creator.' '' 'Source: https://github.com/cosmos-creator/cosmos-creator' '' 'Live Site: https://cosmos-creator.github.io' '' > ${{ env.RELEASE_DIR }}/README.md
+
+    - name: Copy license file
+      run: |
+        cp LICENSE.md ${{ env.RELEASE_DIR }}/LICENSE.md
+
+    - name: Update version setting
+      run: |
+        sed -i 's/%%VERSION%%/${{ env.TAG_NAME }}/' ${{ env.RELEASE_DIR }}/settings.json
+
+    - name: Create release asset
+      run: |
+        cd build/wwwroot
+        zip -r ../../cosmos-creator-${{ env.TAG_NAME }}.zip *
+        cd ../..
+
+    - name: Upload release asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ env.UPLOAD_URL }}
+        asset_path: ./cosmos-creator-${{ env.TAG_NAME }}.zip
+        asset_name: cosmos-creator-${{ env.TAG_NAME }}.zip
+        asset_content_type: application/zip
+
+    - name: Deploy to Github Pages
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        ACCESS_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        COMMIT_MESSAGE: ${{ env.COMMIT_MESSAGE }}
+        BASE_BRANCH: master
+        BRANCH: master
+        FOLDER: ${{ env.RELEASE_DIR }}
+        CLEAN: true

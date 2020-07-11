@@ -1,0 +1,28 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/bin": true,
+    "**/obj": true,
+    "**/TestResults": true,
+  },
+  "editor.rulers": [
+    100,
+    120
+  ],
+  "editor.occurrencesHighlight": false,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.insertSpaces": true,
+  "editor.trimAutoWhitespace": true,
+  "files.insertFinalNewline": true,
+  "html.format.endWithNewline": true,
+  "xml.formatOnSave": false,
+  "editor.tabSize": 2,
+  "[csharp]": {
+    "editor.tabSize": 4
+  },
+  "[xml]": {
+    "editor.formatOnSave": false
+  }
+}

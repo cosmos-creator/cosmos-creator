@@ -1,0 +1,236 @@
+// SPDX-License-Identifier: MIT
+// Copyright ©2020 Cosmos Creator Group
+
+.loading-page {
+  width: 100%;
+  min-height: 100vh;
+
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+
+  -ms-flex-direction: row;
+  flex-direction: row;
+
+  padding-left: 0;
+  padding-right: 0;
+
+  margin-right: auto;
+  margin-left: auto;
+
+
+  @include flex-wrap(wrap);
+
+  @include flex-align(center);
+
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.loading-container {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  position: relative;
+
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+
+  max-width: 600px;
+}
+
+.loading-card {
+  border-radius: 4px;
+
+
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #191c20;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+
+  padding-left: 3rem !important;
+  padding-bottom: 3rem !important;
+  padding-right: 3rem !important;
+  padding-top: 3rem !important;
+}
+
+.loading-copyright {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+
+  width: 100%;
+  text-align: right;
+
+  padding-left: 0.3rem !important;
+  padding-bottom: 0.1rem !important;
+  padding-right: 0.3rem !important;
+  padding-top: 0.1rem !important;
+
+  font-size: smaller;
+  color: #616161;
+}
+
+.loading-title {
+  font-weight: bold;
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
+
+.loading-help {
+  color: #e4eaec;
+  margin-bottom: 2em;
+}
+
+.loading-help:after {
+  content: "";
+  @include animation(change-loading-help 2s linear infinite);
+}
+
+
+
+
+
+@mixin text-change-animation($animation-name, $text-list) {
+  @include keyframes($animation-name) {
+    $length: length($text-list) - 1;
+
+    @each $text in $text-list {
+      $percent: ((index($text-list, $text) - 1) / $length) * 100%;
+
+      #{$percent} {
+        content: $text;
+      }
+    }
+  }
+}
+
+$loading-help-list: "Generating random garbage...",
+"Filling holes with dirt...",
+"Hiding the bodies...",
+"Doing more stuff...",
+"This shouldn't be taking this long...",
+"Do you think it's broken?";
+@include text-change-animation(change-loading-help, $loading-help-list);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.loading-circle {
+  border-radius: 100%;
+  position: relative;
+  margin: 0 auto;
+}
+
+.loading-circle:before,
+.loading-circle:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+
+.loading-outer-circle {
+  width: 100px;
+  height: 100px;
+
+  // This is to center the inner circle, can this be simplified?
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+}
+
+.loading-outer-circle:before,
+.loading-outer-circle:after {
+  border: 21px solid transparent;
+  border-top-color: hsl(35, 95%, 45%);
+}
+
+.loading-outer-circle:before {
+  z-index: 100;
+  @include animation(spin-ccw-x2 2s infinite);
+}
+
+.loading-outer-circle:after {
+  border: 21px solid hsl(195, 2%, 30%);
+}
+
+.loading-inner-circle {
+  width: 60px;
+  height: 60px;
+
+  // This is to center the inner circle, can this be simplified?
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.loading-inner-circle:before,
+.loading-inner-circle:after {
+  border: 20px solid transparent;
+  border-top-color: hsl(35, 95%, 40%);
+}
+
+.loading-inner-circle:before {
+  z-index: 100;
+  @include animation(spin-cw-x2 2s infinite);
+}
+
+.loading-inner-circle:after {
+  z-index: 90;
+  border: 20px solid hsl(195, 2%, 25%);
+}
