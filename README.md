@@ -1,5 +1,5 @@
 - 👋 Hi, I’m Javed Ali aka cosmos-creator.
-- 🌱 I’m currently learning : python and web development.
+- 🌱 I’m currently learning : Python and Web Development.
 - 💞️ I’m looking to collaborate on : None(I'm still learning!)
-- 📫 How to reach me : only personal contact.
+- 📫 How to reach me : Only personal contact.
 - ✌️ I'm not on any social medias.
