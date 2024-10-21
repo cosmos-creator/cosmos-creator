@@ -1,4 +1,4 @@
-- 📫 Connect with me : javed.ali8742@gmail.com
+- 📫 Connect with me : ezy.misc@gmail.com
 - ✌️ I'm not on any social media
 
 
